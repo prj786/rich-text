@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'textEditor';
+  public htmlText = `
+    <div>
+        Hello World!!
+    </div>
+  `;
+  public editMode = false;
+
+
+  public realHTML(html: string): void {
+    this.htmlText = html;
+  }
 }

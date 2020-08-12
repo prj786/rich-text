@@ -1,0 +1,76 @@
+<div id="editorBox">
+  <div class="editor">
+    <!-- BUTTONS -->
+    <div class="button-bar" *ngIf="editMode">
+      <button class="btn"  (click)="execCommand('bold')">B</button>
+      <button class="btn"  (click)="execCommand('italic')">I</button>
+      <button class="btn" style="text-decoration: line-through"  (click)="execCommand('strikethrough')">S</button>
+      <button class="btn" style="text-decoration: underline"  (click)="execCommand('underline')">U</button>
+      <button class="btn"  (click)="execCommand('subscript')">X <sub>2</sub></button>
+      <button class="btn"  (click)="execCommand('superscript')">X <sup>2</sup></button>
+      <button class="btn"  (click)="execCommand('copy')">copy</button>
+      <button class="btn"  (click)="execCommand('insertOrderedList')">O-list</button>
+      <button class="btn"  (click)="execCommand('insertUnorderedList')">U-list</button>
+      <button class="btn dropdown"><span (click)="tableDropdown = !tableDropdown">T</span>
+        <div class="dropdown_item" *ngIf="tableDropdown">
+          <div class="table-box">
+            <input type="text" [(ngModel)]="tableRow">
+            x
+            <input type="text" [(ngModel)]="tableColumn">
+          </div>
+          <button (click)="execCommand('createTable'); tableDropdown = false">Create</button>
+        </div>
+      </button>
+      <button class="btn dropdown"><span (click)="nameDropdown = !nameDropdown">A</span>
+        <div class="dropdown_item" *ngIf="nameDropdown">
+          <div *ngFor="let font of fontList">
+            <div class="dropdown_list" (click)="execCommand('fontName', font); nameDropdown = false">{{font}}</div>
+          </div>
+        </div>
+      </button>
+      <button class="btn dropdown"><span (click)="sizeDropdown = !sizeDropdown">F</span>
+        <div class="dropdown_item" *ngIf="sizeDropdown">
+          <div *ngFor="let fontSize of fontSize">
+            <div class="dropdown_list" (click)="execCommand('fontSize', '', fontSize); sizeDropdown = false">{{fontSize}}</div>
+          </div>
+        </div>
+      </button>
+      <button class="btn dropdown"><span (click)="imgDropdown = !imgDropdown">IMG</span>
+        <div class="dropdown_item" *ngIf="imgDropdown">
+          <input type="text" [(ngModel)]="imgUrl" placeholder="enter url">
+          <button (click)="execCommand('insertImg')">insert</button>
+        </div>
+      </button>
+      <button class="btn dropdown"><span (click)="anchorDropdown = !anchorDropdown">Link</span>
+        <div class="dropdown_item" *ngIf="anchorDropdown">
+          <input type="text" [(ngModel)]="anchorUrl" placeholder="enter url">
+          <input type="text" [(ngModel)]="anchorText" placeholder="enter text">
+          <button (click)="execCommand('createLink')">insert</button>
+        </div>
+      </button>
+      <button class="btn dropdown" [ngStyle]="{'backgroundColor': pickedColor, 'color': '#fff'}"><span (click)="colorsDropdown = !colorsDropdown">Colors</span>
+        <div class="color_pallet" *ngIf="colorsDropdown">
+          <div class="picked" *ngIf="pickedColor">
+            <h6  style="color: #000" >picked color:</h6>
+            <div class="picked_color" [ngStyle]="{'backgroundColor': pickedColor}"></div>
+          </div>
+          <div class="pallets">
+            <div class="box" *ngFor="let color of colorList">
+              <div class="color_item" [ngStyle]="{'backgroundColor': color}" (click)="execCommand('foreColor', '', '', color); colorsDropdown = false"></div>
+            </div>
+          </div>
+        </div>
+      </button>
+      <button class="btn"  (click)="execCommand('undo')">Undo</button>
+      <button class="btn"  (click)="execCommand('redo')">Redo</button>
+      <button class="btn"  (click)="execCommand('insertHorizontalRule')">Line</button>
+      <button class="btn"  (click)="execCommand('print')">Print</button>
+      <button class="btn" *ngIf="zoomIn" (click)="execCommand('fullScreen')">Zoom in</button>
+      <button class="btn" *ngIf="zoomOut" (click)="execCommand('fullScreen')">Zoom out</button>
+    </div>
+    <!-- EDITOR -->
+    <div class="text-box" id="textEditor" *ngIf="editMode" [innerHTML]="innerContent" contenteditable="true"></div>
+    <div class="text-box" [innerHTML]="innerContent" *ngIf="!editMode"></div>
+    <button *ngIf="editMode" (click)="execCommand('send')">send</button>
+  </div>
+</div>

@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #textEditor, #textEditor * {
+    visibility: visible;
+  }
+  #textEditor {
+    position: absolute;
+    left: 0;
+    width: 90%;
+    height: fit-content;
+    border: 0;
+    outline: none;
+    top: 0;
+  }
+}
